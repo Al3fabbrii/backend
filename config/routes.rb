@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
 
     # Protected endpoints (require authentication)
+    resource :cart, only: [:show] do
+      resources :items, only: [:create, :update, :destroy], controller: 'cart_items'
+    end
+
     resources :orders, only: [:index, :create]
   end
 

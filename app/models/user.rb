@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :carts, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
@@ -13,5 +14,9 @@ class User < ApplicationRecord
       email: email_address,
       createdAt: created_at.iso8601
     }
+  end
+
+  def current_cart
+    carts.last || carts.create!
   end
 end
