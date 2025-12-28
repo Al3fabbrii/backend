@@ -1,4 +1,5 @@
 class Order < ApplicationRecord
+  belongs_to :user
   has_many :order_items, dependent: :destroy
   has_many :products, through: :order_items
 
@@ -11,11 +12,12 @@ class Order < ApplicationRecord
   def as_json(options = {})
     {
       id: id,
+      userId: user_id,
       customer: customer,
       address: address,
       total: total.to_f,
       createdAt: created_at.iso8601,
-      order_items: order_items.map(&:as_json)
+      items: order_items.map(&:as_json)
     }
   end
 end

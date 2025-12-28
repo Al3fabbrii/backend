@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_28_093518) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_28_143115) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.datetime "created_at", null: false
@@ -45,6 +45,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_093518) do
     t.json "customer", null: false
     t.decimal "total", precision: 10, scale: 2, null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", id: :string, force: :cascade do |t|
@@ -95,6 +97,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_28_093518) do
   add_foreign_key "carts", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "wishlist_items", "wishlists"
   add_foreign_key "wishlists", "users"
