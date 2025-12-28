@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :carts, dependent: :destroy
+  has_many :wishlists, dependent: :destroy
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
@@ -18,5 +19,9 @@ class User < ApplicationRecord
 
   def current_cart
     carts.last || carts.create!
+  end
+
+  def current_wishlist
+    wishlists.last || wishlists.create!
   end
 end

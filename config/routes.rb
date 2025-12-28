@@ -16,6 +16,10 @@ Rails.application.routes.draw do
       resources :items, only: [:create, :update, :destroy], controller: 'cart_items'
     end
 
+    resource :wishlist, only: [:show] do
+      resources :items, only: [:create, :destroy], controller: 'wishlist_items'
+    end
+
     resources :orders, only: [:index, :create]
   end
 
