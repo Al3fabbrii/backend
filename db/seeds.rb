@@ -48,15 +48,11 @@ puts "🌱 Seeding database..."
 
 # Crea utenti di test
 puts "\nCreating test users..."
-test_user = User.create!(
-  email: 'user@example.com',
-  password: 'password123',
-  password_confirmation: 'password123',
-  first_name: 'Test',
-  last_name: 'User',
-  address: '123 Test Street, Test City, 12345',
-  role: 'user'
-)
+
+User.find_or_create_by!(email: 'user@example.com') do |user|
+  user.password = 'password123'
+  user.password_confirmation = 'password123'
+end
 
 puts "✅ Created #{User.count} users"
 puts "   - User: user@example.com / password123"
