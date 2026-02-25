@@ -72,7 +72,8 @@ module Api
       if order_params[:items].present?
         order_params[:items].each do |item|
           product_id = item[:id]
-          product_quantities[product_id] += 1
+          quantity = (item[:quantity] || 1).to_i
+          product_quantities[product_id] += quantity
         end
 
         # Verifica stock disponibile per ogni prodotto prima di creare l'ordine
@@ -127,13 +128,13 @@ module Api
     end
 
     private
-
+    #parametri accettati per creare un ordine
     def order_params
       params.require(:order).permit(
         :total,
         customer: [:firstName, :lastName, :email],
         address: [:street, :city, :zip],
-        items: [:id, :title, :price, :originalPrice, :sale, :thumbnail, :createdAt, :description, tags: []]
+        items: [:id, :title, :price, :originalPrice, :sale, :thumbnail, :createdAt, :description, :quantity, tags: []]
       )
     end
   end
